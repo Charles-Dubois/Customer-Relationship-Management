@@ -1,5 +1,4 @@
 const express = require("express");
-const mongoose = require("mongoose");
 const registerJoi = require("../Joi/registerJoi");
 const router = express.Router();
 const Register = require("../models/registerModel");
@@ -17,7 +16,7 @@ function validRegister(req, res, next) {
 router.get("/", (_req, res) => {
   res.json({
     message:
-      "use the post method with in the body an email and a password to connect",
+      "Use the post method with in the body an email and a password to create an account",
   });
 });
 

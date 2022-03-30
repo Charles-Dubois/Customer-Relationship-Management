@@ -3,6 +3,7 @@ const app = express();
 const mongoose = require("mongoose");
 const mongoKey = require("./private/mongoKey");
 const registerRouter = require("./routers/register");
+const loginRouter = require("./routers/login");
 const PORT = 8000;
 app.use(express.json());
 mongoose
@@ -10,6 +11,7 @@ mongoose
   .then(console.log("connected to mongo"))
   .catch((err) => console.log(err));
 app.use("/register", registerRouter);
+app.use("/login", loginRouter);
 app.get("/", (_req, res) => {
   res.send("Customer Relationship Management");
 });
