@@ -32,7 +32,7 @@ router.post("/", validRegister, async (req, res) => {
     return res.status(400).json({ message: "This email is not availaible" });
   }
 
-  res.status(201).json({ message: "user created", description: result });
+  res.status(201).json({ message: "user created" });
 });
 
 module.exports = router;
