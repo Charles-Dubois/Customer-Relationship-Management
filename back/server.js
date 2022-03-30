@@ -6,6 +6,7 @@ const mongoKey = require("./private/mongoKey");
 const registerRouter = require("./routers/register");
 const loginRouter = require("./routers/login");
 const contactRouter = require("./routers/contact");
+const logoutRouter = require("./routers/logout");
 const PORT = 8000;
 
 app.use(express.json());
@@ -21,6 +22,8 @@ app.use("/register", registerRouter);
 app.use("/login", loginRouter);
 
 app.use("/contact", contactRouter);
+
+app.use("/logout", logoutRouter);
 
 app.get("/", (_req, res) => {
   res.send("Customer Relationship Management");
