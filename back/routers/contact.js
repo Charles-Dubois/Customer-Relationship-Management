@@ -3,6 +3,7 @@ const jwt = require("jsonwebtoken");
 const secret = require("../private/secret");
 const contactJoi = require("../Joi/contactJoi");
 const Contact = require("../models/contactModel");
+const validContact = require("../middlewares/validContact");
 const router = express.Router();
 
 function cookieChecker(req, res, next) {
@@ -15,16 +16,6 @@ function cookieChecker(req, res, next) {
   next();
 }
 
-function validContact(req, res, next) {
-  const validation = contactJoi.validate(req.body);
-  if (validation.error) {
-    return res.status(400).json({
-      message: "error 400 bad request",
-      description: validation.error.details[0].message,
-    });
-  }
-  next();
-}
 router.use(cookieChecker);
 
 router.post("/", validContact, async (req, res) => {
@@ -41,8 +32,13 @@ router.post("/", validContact, async (req, res) => {
 });
 
 router.get("/", async (req, res) => {
-  res.json({
-    message: "Connected",
-  });
+  let result;
+  try {
+    result = await Contact.find(req.userID);
+  } catch (error) {
+    console.log(err);
+    return res.status(400).json({ message: "bad resquest 400" });
+  }
+  res.json(result);
 });
 module.exports = router;
