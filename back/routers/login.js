@@ -1,6 +1,7 @@
 const express = require("express");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const cookieParser = require("cookie-parser");
 const Register = require("../models/registerModel");
 const router = express.Router();
 const loginJoi = require("../Joi/loginJoi");
@@ -18,16 +19,18 @@ function validLogin(req, res, next) {
 }
 
 async function checkConnection(req, res, next) {
-  req.body.result = "default value";
   req.body.error = { message: "This email or the password is not valid" };
-  let { email, password, result, error } = req.body;
+  let { email, password, error } = req.body;
 
   try {
-    result = await Register.findOne({ email });
-    if (!result) {
+    req.body.result = await Register.findOne({ email });
+    if (!req.body.result) {
       return res.json(error);
     }
-    const ckeckPassword = await bcrypt.compare(password, result.password);
+    const ckeckPassword = await bcrypt.compare(
+      password,
+      req.body.result.password
+    );
     if (!ckeckPassword) {
       return res.json(error);
     }
@@ -35,6 +38,7 @@ async function checkConnection(req, res, next) {
     console.log(err);
     return res.status(400).json({ message: "bad request 400" });
   }
+
   next();
 }
 
@@ -46,9 +50,10 @@ router.get("/", (_req, res) => {
 });
 
 router.post("/", validLogin, checkConnection, async (req, res) => {
-  //   const token = jwt.sign({ id: user._id }, secret);
-  //   console.log(token);
-  res.json({ message: `${req.body.result} connected ! ` });
+  let { result } = req.body;
+  const token = jwt.sign({ id: result._id }, secret);
+  res.cookie("jwt", token, { httpOnly: true, secure: false });
+  res.json({ message: `${result.email} connected ! ` });
 });
 
 module.exports = router;
