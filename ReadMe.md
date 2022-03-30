@@ -1,5 +1,3 @@
-Il peut supprimer d’autres utilisateurs (sauf un autre admin). Quand il supprime un autre utilisateur, tous les contacts de ce dernier sont également supprimés.
-
 ## ⭐️⭐️⭐️ Bonus
 
 Rajouter un système de déconnexion automatique. Lorsque vous émettez un token, ce dernier a une durée de vie illimitée, n'est-ce pas ? Un token émis peut être utilisé indéfiniment pour accéder à votre application. Dans la réalité, ce système est trop dangereux. Par exemple, si le token a été volé, sans que l'utilisateur en ai conscience, le hacker pourrait en profiter sans limite.

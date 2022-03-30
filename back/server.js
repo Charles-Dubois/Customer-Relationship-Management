@@ -36,3 +36,4 @@ app.get("*", (_req, res) => {
   res.status(404).send("error 404");
 });
 app.listen(PORT, () => console.log(`listen on port ${PORT}`));
+//TODO Conitunue tomorow with the bonus which is in the readme
