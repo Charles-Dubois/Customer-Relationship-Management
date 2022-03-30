@@ -7,6 +7,7 @@ const registerRouter = require("./routers/register");
 const loginRouter = require("./routers/login");
 const contactRouter = require("./routers/contact");
 const logoutRouter = require("./routers/logout");
+const adminRouter = require("./routers/admin");
 const PORT = 8000;
 
 app.use(express.json());
@@ -24,6 +25,8 @@ app.use("/login", loginRouter);
 app.use("/contact", contactRouter);
 
 app.use("/logout", logoutRouter);
+
+app.use("/admin", adminRouter);
 
 app.get("/", (_req, res) => {
   res.send("Customer Relationship Management");

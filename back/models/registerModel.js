@@ -12,6 +12,10 @@ const registerSchema = mongoose.Schema({
     minLenght: 6,
   },
   contacts: [{ type: mongoose.Types.ObjectId, ref: "contacts" }],
+  isAdmin: {
+    type: Boolean,
+    required: true,
+  },
 });
 const Register = mongoose.model("users", registerSchema);
 
