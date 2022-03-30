@@ -1,4 +1,5 @@
 const express = require("express");
+const bcrypt = require("bcrypt");
 const registerJoi = require("../Joi/registerJoi");
 const router = express.Router();
 const Register = require("../models/registerModel");
@@ -24,6 +25,7 @@ router.post("/", validRegister, async (req, res) => {
   let result;
 
   try {
+    req.body.password = await bcrypt.hash(req.body.password, 12);
     result = await Register.create(req.body);
   } catch (err) {
     console.log(err);

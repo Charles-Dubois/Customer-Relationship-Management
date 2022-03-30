@@ -1,7 +1,9 @@
 const express = require("express");
+const bcrypt = require("bcrypt");
 const Register = require("../models/registerModel");
 const router = express.Router();
 const loginJoi = require("../Joi/loginJoi");
+const secret = require("../private/secret");
 
 function validLogin(req, res, next) {
   const validation = loginJoi.validate(req.body);
@@ -22,10 +24,13 @@ router.get("/", (_req, res) => {
 });
 
 router.post("/", validLogin, async (req, res) => {
+  const { email, password } = req.body;
   let result;
+
   try {
-    result = await Register.find(req.body);
-    if (result.length === 0) {
+    result = await Register.findOne({ email });
+    const ckeckPassword = await bcrypt.compare(password, result.password);
+    if (!result || !ckeckPassword) {
       return res.json({ message: "This email or the password is not valid" });
     }
   } catch (err) {
@@ -33,7 +38,8 @@ router.post("/", validLogin, async (req, res) => {
     return res.status(400).json({ message: "bad request 400" });
   }
 
-  res.json(result);
+  res.json({ message: `${result.email} connected ! ` });
+  //
 });
 
 module.exports = router;
