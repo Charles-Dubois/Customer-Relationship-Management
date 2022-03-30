@@ -2,7 +2,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const registerJoi = require("../Joi/registerJoi");
 const router = express.Router();
-
+const Register = require("../models/registerModel");
 function validRegister(req, res, next) {
   const validation = registerJoi.validate(req.body);
   if (validation.error) {
@@ -22,7 +22,16 @@ router.get("/", (_req, res) => {
 });
 
 router.post("/", validRegister, async (req, res) => {
-  res.status(201).json({ message: "user created", description: req.body });
+  let result;
+
+  try {
+    result = await Register.create(req.body);
+  } catch (err) {
+    console.log(err);
+    return res.status(400).json({ message: "This email is not availaible" });
+  }
+
+  res.status(201).json({ message: "user created", description: result });
 });
 
 module.exports = router;
