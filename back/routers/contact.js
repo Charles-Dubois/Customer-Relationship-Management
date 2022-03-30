@@ -1,7 +1,6 @@
 const express = require("express");
 const jwt = require("jsonwebtoken");
 const secret = require("../private/secret");
-const contactJoi = require("../Joi/contactJoi");
 const Contact = require("../models/contactModel");
 const validContact = require("../middlewares/validContact");
 const router = express.Router();

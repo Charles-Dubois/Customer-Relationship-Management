@@ -1,46 +1,9 @@
 const express = require("express");
-const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-const cookieParser = require("cookie-parser");
-const Register = require("../models/registerModel");
 const router = express.Router();
-const loginJoi = require("../Joi/loginJoi");
+const validLogin = require("../middlewares/validLogin");
+const checkConnection = require("../middlewares/checkConnection");
 const secret = require("../private/secret");
-
-function validLogin(req, res, next) {
-  const validation = loginJoi.validate(req.body);
-  if (validation.error) {
-    return res.status(400).json({
-      message: "error 400 bad request",
-      description: validation.error.details[0].message,
-    });
-  }
-  next();
-}
-
-async function checkConnection(req, res, next) {
-  req.body.error = { message: "This email or the password is not valid" };
-  let { email, password, error } = req.body;
-
-  try {
-    req.body.result = await Register.findOne({ email });
-    if (!req.body.result) {
-      return res.json(error);
-    }
-    const ckeckPassword = await bcrypt.compare(
-      password,
-      req.body.result.password
-    );
-    if (!ckeckPassword) {
-      return res.json(error);
-    }
-  } catch (err) {
-    console.log(err);
-    return res.status(400).json({ message: "bad request 400" });
-  }
-
-  next();
-}
 
 router.get("/", (_req, res) => {
   res.json({
