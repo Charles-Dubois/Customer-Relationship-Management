@@ -1,13 +1,9 @@
-<!-- - Un utilisateur peut créer un compte à l'aide de son email et de son mot de passe. Il est indispensable d'avoir un compte pour utiliser l'application. En effet, chaque utilisateur possède sa liste privée de contacts auxquels seul lui a accès. Un contact est donc lié à un utilisateur. Un seul compte par email peut être créé. -->
+Rajouter une catégorie pour les utilisateurs. C’est-à-dire qu’un utilisateur peut être simple _user_, ou alors _admin_. Un admin a des droits qu’un user n’a pas. Par exemple, il peut supprimer d’autres utilisateurs (sauf un autre admin). Quand il supprime un autre utilisateur, tous les contacts de ce dernier sont également supprimés.
 
-<!-- - Les routes /register et /login permettent respectivement de créer un compte et de se connecter. Elles reçoivent l'email et le mot de passe dans le body. La première renvoie seulement un message indiquant que le compte a bien été créé, c'est-à-dire si l'email est disponible et que le mot de passe a le bon format (minimum 6 caractères et un chiffre). -->
+**PS:** on ne peut pas créer directement un compte administrateur. On créé d’abord un compte utilisateur, et ensuite on modifie la catégorie directement depuis le site de Mongo ou PGAdmin manuellement. Ainsi, seul le développeur - en l’occurrence vous - peut passer un utilisateur à administrateur. C’est un gage de sécurité pour votre application.
 
-La seconde renvoie un token contenant les informations de l'utilisateur. En cas d'erreur, un message "error" est également envoyé. Il faut utiliser les bons codes HTTP en cas de succès/erreurs.
+## ⭐️⭐️⭐️ Bonus
 
-- La route /contacts va gérer toutes les requêtes en rapport avec les contacts. Seuls les verbes HTTP changeront. Sur cette route, il faut pouvoir :
-  - récupérer la liste des contacts de l'utilisateur connecté. Dans le json de la réponse, la clé data contient le tableau d'objets où chaque objet est un contact, et la clé nb contient le nombre de contacts.
-  - ajouter un contact
-  - modifier un contact (avec un PUT)
-  - supprimer un contact
-  - faire une recherche de contacts avec des filtres spécifiques (utiliser les query strings). On doit pouvoir rechercher un contact en fonction de son : nom OU email OU catégorie. Par exemple : **_/contacts?category=3_ OU _/contacts?name=John_**
-- La base de données doit s'appeler crmDB doit contenir une collection/table users ET une collection/table contacts. Dans ces dernières, les documents auront cette forme (ici l’exemple est donné avec une db Mongo) :
+Rajouter un système de déconnexion automatique. Lorsque vous émettez un token, ce dernier a une durée de vie illimitée, n'est-ce pas ? Un token émis peut être utilisé indéfiniment pour accéder à votre application. Dans la réalité, ce système est trop dangereux. Par exemple, si le token a été volé, sans que l'utilisateur en ai conscience, le hacker pourrait en profiter sans limite.
+
+Faites en sorte qu'un token soit considéré comme "expiré" lorsque ce dernier a été émis il y a plus de x jours (ou x secondes pour les besoins du développement). Si un token est identifié comme expiré, alors on supprime le cookie de l'utilisateur et ce dernier doit se reconnecter.

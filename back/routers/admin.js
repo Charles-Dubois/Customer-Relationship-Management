@@ -4,6 +4,7 @@ const { find } = require("../models/registerModel");
 const router = express.Router();
 const secret = require("../private/secret");
 const Register = require("../models/registerModel");
+const IdIsAdmin = require("../middlewares/idIsAdmin");
 
 async function cookieCheckerAdmin(req, res, next) {
   try {
@@ -23,15 +24,18 @@ async function cookieCheckerAdmin(req, res, next) {
   if (!result) {
     return res.status(401).json({ message: "Reserved to admins" });
   }
-
   next();
 }
 router.use(cookieCheckerAdmin);
 
-router.get("/", (req, res) => {
+router.get("/", (_req, res) => {
   res.json({
-    message: "hello from admin",
+    message: "use the delete method to remove user",
   });
+});
+
+router.delete("/", IdIsAdmin, async (req, res) => {
+  res.json({ message: "hello from delete" });
 });
 
 module.exports = router;
