@@ -1,8 +1,10 @@
 const express = require("express");
+const mongoose = require("mongoose");
 const jwt = require("jsonwebtoken");
 const secret = require("../private/secret");
 const Contact = require("../models/contactModel");
 const validContact = require("../middlewares/validContact");
+const updateContact = require("../middlewares/updateContact");
 const router = express.Router();
 
 function cookieChecker(req, res, next) {
@@ -17,6 +19,17 @@ function cookieChecker(req, res, next) {
 
 router.use(cookieChecker);
 
+router.get("/", async (req, res) => {
+  let result;
+  try {
+    result = await Contact.find(req.userID);
+  } catch (error) {
+    console.log(err);
+    return res.status(400).json({ message: "bad resquest 400" });
+  }
+  res.json(result);
+});
+
 router.post("/", validContact, async (req, res) => {
   let result;
   try {
@@ -30,14 +43,18 @@ router.post("/", validContact, async (req, res) => {
   res.json({ message: "contact added", description: result });
 });
 
-router.get("/", async (req, res) => {
+router.put("/", updateContact, async (req, res) => {
+  const { contactID, update } = req.body;
+
   let result;
   try {
-    result = await Contact.find(req.userID);
+    await Contact.findByIdAndUpdate(contactID, update);
+    result = await Contact.findById(contactID);
   } catch (error) {
-    console.log(err);
-    return res.status(400).json({ message: "bad resquest 400" });
+    console.log(error);
+    return res.status(400).json({ massage: "The id is not valid" });
   }
+
   res.json(result);
 });
 module.exports = router;

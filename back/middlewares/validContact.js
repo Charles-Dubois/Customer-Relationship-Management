@@ -1,4 +1,5 @@
 const contactJoi = require("../Joi/contactJoi");
+
 function validContact(req, res, next) {
   const validation = contactJoi.validate(req.body);
   if (validation.error) {
