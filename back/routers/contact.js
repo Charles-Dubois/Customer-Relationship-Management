@@ -20,13 +20,16 @@ function cookieChecker(req, res, next) {
 router.use(cookieChecker);
 
 router.get("/", async (req, res) => {
-  let result;
+  let data, nb, result;
   try {
-    result = await Contact.find(req.userID);
+    data = await Contact.find(req.userID);
+    nb = await Contact.find().count();
+    result = { nb, data };
   } catch (error) {
     console.log(err);
     return res.status(400).json({ message: "bad resquest 400" });
   }
+
   res.json(result);
 });
 
@@ -52,9 +55,21 @@ router.put("/", updateContact, async (req, res) => {
     result = await Contact.findById(contactID);
   } catch (error) {
     console.log(error);
-    return res.status(400).json({ massage: "The id is not valid" });
+    return res.status(400).json({ message: "The id is not valid" });
   }
-
   res.json(result);
 });
+
+router.delete("/", async (req, res) => {
+  try {
+    await Contact.findOneAndDelete(req.body);
+  } catch (error) {
+    console.log(error);
+    return res
+      .status(400)
+      .json({ message: "Any contact correspond to this id" });
+  }
+  res.json({ message: "contact deleted ! " });
+});
+
 module.exports = router;
