@@ -5,6 +5,8 @@ const secret = require("../private/secret");
 const Contact = require("../models/contactModel");
 const validContact = require("../middlewares/validContact");
 const updateContact = require("../middlewares/updateContact");
+const checkQuery = require("../middlewares/checkQuery");
+
 const router = express.Router();
 
 function cookieChecker(req, res, next) {
@@ -16,10 +18,9 @@ function cookieChecker(req, res, next) {
   }
   next();
 }
-
 router.use(cookieChecker);
 
-router.get("/", async (req, res) => {
+router.get("/", checkQuery, async (req, res) => {
   let data, nb, result;
   try {
     data = await Contact.find(req.userID);

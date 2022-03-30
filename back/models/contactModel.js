@@ -13,7 +13,7 @@ const contactSchema = mongoose.Schema({
   description: {
     type: String,
   },
-  categorie: { type: String },
+  category: { type: String },
 });
 const Contact = mongoose.model("contacts", contactSchema);
 
