@@ -7,7 +7,7 @@ async function IdIsAdmin(req, res, next) {
     adminId = adminId.isAdmin;
   } catch (error) {
     console.log(error);
-    return res.status(400).json({ message: "bad request 400 " });
+    return res.status(400).json({ message: "this id is not valid" });
   }
 
   if (adminId) {

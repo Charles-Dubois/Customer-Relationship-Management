@@ -4,7 +4,9 @@ const { find } = require("../models/registerModel");
 const router = express.Router();
 const secret = require("../private/secret");
 const Register = require("../models/registerModel");
+const Contact = require("../models/contactModel");
 const IdIsAdmin = require("../middlewares/idIsAdmin");
+const validBodyDeleteAdmin = require("../middlewares/validBodyDeleteAdmin");
 
 async function cookieCheckerAdmin(req, res, next) {
   try {
@@ -34,8 +36,16 @@ router.get("/", (_req, res) => {
   });
 });
 
-router.delete("/", IdIsAdmin, async (req, res) => {
-  res.json({ message: "hello from delete" });
+router.delete("/", validBodyDeleteAdmin, IdIsAdmin, async (req, res) => {
+  try {
+    await Contact.deleteMany({ userID: req.body.id });
+    await Register.findByIdAndDelete(req.body.id);
+  } catch (error) {
+    console.log(error);
+    return res.status(400).json({ message: "bad request 400" });
+  }
+
+  res.json({ message: "user & his contacts removed" });
 });
 
 module.exports = router;

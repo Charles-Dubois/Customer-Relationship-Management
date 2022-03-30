@@ -1,6 +1,4 @@
-Rajouter une catégorie pour les utilisateurs. C’est-à-dire qu’un utilisateur peut être simple _user_, ou alors _admin_. Un admin a des droits qu’un user n’a pas. Par exemple, il peut supprimer d’autres utilisateurs (sauf un autre admin). Quand il supprime un autre utilisateur, tous les contacts de ce dernier sont également supprimés.
-
-**PS:** on ne peut pas créer directement un compte administrateur. On créé d’abord un compte utilisateur, et ensuite on modifie la catégorie directement depuis le site de Mongo ou PGAdmin manuellement. Ainsi, seul le développeur - en l’occurrence vous - peut passer un utilisateur à administrateur. C’est un gage de sécurité pour votre application.
+Il peut supprimer d’autres utilisateurs (sauf un autre admin). Quand il supprime un autre utilisateur, tous les contacts de ce dernier sont également supprimés.
 
 ## ⭐️⭐️⭐️ Bonus
 
