@@ -1,7 +1,6 @@
 const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
-const jwt = require("jsonwebtoken");
 const cookieParser = require("cookie-parser");
 const mongoKey = require("./private/mongoKey");
 const registerRouter = require("./routers/register");
@@ -11,6 +10,7 @@ const logoutRouter = require("./routers/logout");
 const adminRouter = require("./routers/admin");
 const usersRouter = require("./routers/users");
 const requestsStatsRouter = require("./routers/requestsStats");
+const authResetRouter = require("./routers/authReset");
 
 const requestRegister = require("./middlewares/requests");
 const PORT = 8000;
@@ -38,6 +38,8 @@ app.use("/admin", adminRouter);
 app.use("/users", usersRouter);
 
 app.use("/requests", requestsStatsRouter);
+
+app.use("/auth", authResetRouter);
 
 app.get("/", (_req, res) => {
   res.send("Customer Relationship Management");

@@ -20,7 +20,6 @@ async function cookieChecker(req, res, next) {
   }
   next();
 }
-
 router.use(cookieChecker);
 router.use(theLastRequest);
 
