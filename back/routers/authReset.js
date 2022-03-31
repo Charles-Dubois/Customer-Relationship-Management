@@ -4,7 +4,7 @@ const bcrypt = require("bcrypt");
 const { validate: uuidValidate } = require("uuid");
 const router = express.Router();
 const Register = require("../models/registerModel");
-const generateToken = require("../middlewares/passwordToken");
+const generateToken = require("../middlewares/generateToken");
 const cookiePasswordCheck = require("../middlewares/cookiePasswordCheck");
 
 router.get("/reset/:userId", generateToken, async (req, res) => {

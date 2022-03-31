@@ -11,7 +11,7 @@ function cookiePasswordCheck(req, res, next) {
   }
 
   try {
-    jwt.verify(req.cookies.jwt, secret);
+    jwt.verify(req.cookies.resetPassordJWT, secret);
   } catch (err) {
     console.log(`error in authReset.js ==>` + err);
     return res.status(401).json({ message: "The current link has expirated" });
