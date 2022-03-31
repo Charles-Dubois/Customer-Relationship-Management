@@ -1,6 +1,5 @@
 const express = require("express");
 const jwt = require("jsonwebtoken");
-const { find } = require("../models/registerModel");
 const router = express.Router();
 const secret = require("../private/secret");
 const Register = require("../models/registerModel");

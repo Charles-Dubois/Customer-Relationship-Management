@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 const jwt = require("jsonwebtoken");
 const secret = require("../private/secret");
 const Contact = require("../models/contactModel");
-const Register = require("../models/registerModel");
+
 const validContact = require("../middlewares/validContact");
 const updateContact = require("../middlewares/updateContact");
 const checkQuery = require("../middlewares/checkQuery");
@@ -25,15 +25,15 @@ router.use(theLastRequest);
 
 router.get("/", checkQuery, async (req, res) => {
   let data, nb, result;
+
   try {
-    data = await Contact.find(req.userID);
+    data = await Contact.find({ userID: req.userID.id });
     nb = await Contact.find().count();
     result = { nb, data };
   } catch (error) {
     console.log(err);
     return res.status(400).json({ message: "bad resquest 400" });
   }
-
   res.json(result);
 });
 
