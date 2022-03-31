@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
-const theLastRequest = require("../middlewares/theLastRequest");
+//* conflict here with the last request
+// const theLastRequest = require("../middlewares/theLastRequest");
 const Register = require("../models/registerModel");
 router.get("/online", async (req, res) => {
   const parseDate = new Date(Date.now()) - 60000;
@@ -15,7 +16,10 @@ router.get("/online", async (req, res) => {
     console.log(error);
     return res.status(400).json({ message: "error from users" });
   }
-  res.json({ result });
+  if (result.length === 0) {
+    return res.json({ message: "Any user connected" });
+  }
+  res.json(result);
 });
 
 module.exports = router;
