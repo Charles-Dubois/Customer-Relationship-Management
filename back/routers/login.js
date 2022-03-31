@@ -14,7 +14,14 @@ router.get("/", (_req, res) => {
 
 router.post("/", validLogin, checkConnection, async (req, res) => {
   let { result } = req.body;
-  const token = jwt.sign({ id: result._id }, secret);
+  const token = jwt.sign(
+    {
+      data: "jwt",
+    },
+    secret,
+    { expiresIn: 2629800000 }
+  );
+
   res.cookie("jwt", token, { httpOnly: true, secure: false });
   res.json({ message: `${result.email} connected ! ` });
 });
