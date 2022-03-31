@@ -17,11 +17,13 @@ router.post("/", validLogin, checkConnection, async (req, res) => {
   const token = jwt.sign(
     {
       data: "jwt",
+      id: result._id,
     },
     secret,
     { expiresIn: 2629800000 }
   );
 
+  //jwt.sign({ id: result._id }, secret);
   res.cookie("jwt", token, { httpOnly: true, secure: false });
   res.json({ message: `${result.email} connected ! ` });
 });

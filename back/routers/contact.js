@@ -18,6 +18,19 @@ function cookieChecker(req, res, next) {
   }
   next();
 }
+
+function lastConnection(req, res, next) {
+  let result;
+  try {
+    result = req.userID = jwt.verify(req.cookies.jwt, secret);
+    console.log(result);
+  } catch (err) {
+    console.log(err);
+    return res.status(401).json({ message: "error 400" });
+  }
+  next();
+}
+router.use(lastConnection);
 router.use(cookieChecker);
 
 router.get("/", checkQuery, async (req, res) => {
