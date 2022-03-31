@@ -4,6 +4,7 @@ const router = express.Router();
 const validLogin = require("../middlewares/validLogin");
 const checkConnection = require("../middlewares/checkConnection");
 const secret = require("../private/secret");
+const Register = require("../models/registerModel");
 
 router.get("/", (_req, res) => {
   res.json({
@@ -14,6 +15,15 @@ router.get("/", (_req, res) => {
 
 router.post("/", validLogin, checkConnection, async (req, res) => {
   let { result } = req.body;
+  const lastRequest = { last_reqest: new Date(Date.now()) };
+  try {
+    await Register.findOneAndUpdate(result.email, lastRequest);
+  } catch (error) {
+    console.log(error);
+
+    return res.json({ message: "error 400" });
+  }
+
   const token = jwt.sign(
     {
       data: "jwt",

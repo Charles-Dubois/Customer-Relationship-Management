@@ -18,6 +18,7 @@ const registerSchema = mongoose.Schema({
   },
   last_reqest: {
     type: Date,
+    required: true,
   },
 });
 const Register = mongoose.model("users", registerSchema);

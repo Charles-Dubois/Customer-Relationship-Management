@@ -1,6 +1,7 @@
 const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
+const jwt = require("jsonwebtoken");
 const cookieParser = require("cookie-parser");
 const mongoKey = require("./private/mongoKey");
 const registerRouter = require("./routers/register");
@@ -8,6 +9,7 @@ const loginRouter = require("./routers/login");
 const contactRouter = require("./routers/contact");
 const logoutRouter = require("./routers/logout");
 const adminRouter = require("./routers/admin");
+const secret = require("./private/secret");
 const PORT = 8000;
 
 app.use(express.json());

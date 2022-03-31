@@ -3,13 +3,15 @@ const mongoose = require("mongoose");
 const jwt = require("jsonwebtoken");
 const secret = require("../private/secret");
 const Contact = require("../models/contactModel");
+const Register = require("../models/registerModel");
 const validContact = require("../middlewares/validContact");
 const updateContact = require("../middlewares/updateContact");
 const checkQuery = require("../middlewares/checkQuery");
+const theLastRequest = require("../middlewares/theLastRequest");
 
 const router = express.Router();
 
-function cookieChecker(req, res, next) {
+async function cookieChecker(req, res, next) {
   try {
     req.userID = jwt.verify(req.cookies.jwt, secret);
   } catch (err) {
@@ -19,19 +21,8 @@ function cookieChecker(req, res, next) {
   next();
 }
 
-function lastConnection(req, res, next) {
-  let result;
-  try {
-    result = req.userID = jwt.verify(req.cookies.jwt, secret);
-    console.log(result);
-  } catch (err) {
-    console.log(err);
-    return res.status(401).json({ message: "error 400" });
-  }
-  next();
-}
-router.use(lastConnection);
 router.use(cookieChecker);
+router.use(theLastRequest);
 
 router.get("/", checkQuery, async (req, res) => {
   let data, nb, result;

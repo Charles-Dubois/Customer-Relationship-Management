@@ -27,6 +27,7 @@ router.post("/", validRegister, async (req, res) => {
   try {
     req.body.password = await bcrypt.hash(req.body.password, 12);
     req.body.isAdmin = false;
+    req.body.last_reqest = new Date(Date.now());
     result = await Register.create(req.body);
   } catch (err) {
     console.log(err);
