@@ -7,7 +7,6 @@ async function theLastRequest(req, res, next) {
   try {
     req.userID = jwt.verify(req.cookies.jwt, secret);
     await Register.findByIdAndUpdate(req.userID.id, lastRequest);
-    console.log("last connect");
   } catch (error) {
     console.log(error);
     res.status(400).json({ message: "not connected" });
