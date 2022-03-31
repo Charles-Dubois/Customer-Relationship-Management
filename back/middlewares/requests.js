@@ -8,7 +8,7 @@ async function requestRegister(req, res, next) {
     userID = jwt.verify(req.cookies.jwt, secret);
     userID = userID.id;
   } catch (err) {
-    console.log(err);
+    console.log(`error from requests.js ==> ${err}`);
     userID = "Request from user not connected";
   }
   const currentRequest = {
@@ -20,7 +20,6 @@ async function requestRegister(req, res, next) {
 
   try {
     await Requests.create(currentRequest);
-    console.log("succes");
   } catch (error) {
     console.log(error);
     return res

@@ -10,6 +10,7 @@ const contactRouter = require("./routers/contact");
 const logoutRouter = require("./routers/logout");
 const adminRouter = require("./routers/admin");
 const usersRouter = require("./routers/users");
+const requestsStatsRouter = require("./routers/requestsStats");
 
 const requestRegister = require("./middlewares/requests");
 const PORT = 8000;
@@ -35,6 +36,8 @@ app.use("/logout", logoutRouter);
 app.use("/admin", adminRouter);
 
 app.use("/users", usersRouter);
+
+app.use("/requests", requestsStatsRouter);
 
 app.get("/", (_req, res) => {
   res.send("Customer Relationship Management");

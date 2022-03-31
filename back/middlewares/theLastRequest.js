@@ -9,6 +9,9 @@ async function theLastRequest(req, res, next) {
     await Register.findByIdAndUpdate(req.userID.id, lastRequest);
   } catch (error) {
     console.log(error);
+
+    //* conflict here !
+
     res.status(400).json({ message: "not connected" });
   }
   next();
