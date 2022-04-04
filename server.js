@@ -3,7 +3,7 @@ const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
 const cookieParser = require("cookie-parser");
-const mongoKey = require("./private/mongoKey");
+
 const registerRouter = require("./routers/register");
 const loginRouter = require("./routers/login");
 const contactRouter = require("./routers/contact");
@@ -13,7 +13,7 @@ const usersRouter = require("./routers/users");
 const requestsStatsRouter = require("./routers/requestsStats");
 const authResetRouter = require("./routers/authReset");
 const requestRegister = require("./middlewares/requests");
-const { PORT, MONGODB_URI, API_KEY } = process.env;
+const { MONGODB_URI, API_KEY } = process.env;
 const port = process.env.PORT || 8000;
 app.use(express.json());
 app.use(cookieParser());
@@ -48,4 +48,4 @@ app.get("/", (_req, res) => {
 app.get("*", (_req, res) => {
   res.status(404).send("error 404");
 });
-app.listen(port, () => console.log(`listen on port ${PORT}`));
+app.listen(port, () => console.log(`listen on port ${port}`));
