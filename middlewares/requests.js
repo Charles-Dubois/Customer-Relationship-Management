@@ -22,9 +22,7 @@ async function requestRegister(req, res, next) {
     await Requests.create(currentRequest);
   } catch (error) {
     console.log(error);
-    return res
-      .status(400)
-      .json({ message: "bad request from request middleware" });
+    return res.status(400).json({ message: error });
   }
 
   next();
