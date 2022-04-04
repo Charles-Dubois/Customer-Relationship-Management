@@ -1,6 +1,6 @@
 const jwt = require("jsonwebtoken");
 const Requests = require("../models/requestsModel");
-const secret = require("../private/secret");
+const { secret } = process.env;
 
 async function requestRegister(req, res, next) {
   let userID;

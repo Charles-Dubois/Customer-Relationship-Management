@@ -1,7 +1,7 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const jwt = require("jsonwebtoken");
-const secret = require("../private/secret");
+const { secret } = process.env;
 const Contact = require("../models/contactModel");
 
 const validContact = require("../middlewares/validContact");

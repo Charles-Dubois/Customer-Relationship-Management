@@ -1,13 +1,13 @@
 const express = require("express");
 const jwt = require("jsonwebtoken");
 const router = express.Router();
-const secret = require("../private/secret");
+
 const Register = require("../models/registerModel");
 const Contact = require("../models/contactModel");
 const IdIsAdmin = require("../middlewares/idIsAdmin");
 const validBodyDeleteAdmin = require("../middlewares/validBodyDeleteAdmin");
 const theLastRequest = require("../middlewares/theLastRequest");
-
+const { secret } = process.env;
 async function cookieCheckerAdmin(req, res, next) {
   try {
     req.userID = jwt.verify(req.cookies.jwt, secret);

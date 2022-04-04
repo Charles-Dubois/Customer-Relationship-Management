@@ -3,7 +3,7 @@ const jwt = require("jsonwebtoken");
 const router = express.Router();
 const validLogin = require("../middlewares/validLogin");
 const checkConnection = require("../middlewares/checkConnection");
-const secret = require("../private/secret");
+const { secret } = process.env;
 const Register = require("../models/registerModel");
 
 router.get("/", (_req, res) => {

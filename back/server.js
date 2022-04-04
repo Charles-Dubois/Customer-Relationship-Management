@@ -1,3 +1,4 @@
+require("dotenv").config();
 const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
@@ -11,15 +12,14 @@ const adminRouter = require("./routers/admin");
 const usersRouter = require("./routers/users");
 const requestsStatsRouter = require("./routers/requestsStats");
 const authResetRouter = require("./routers/authReset");
-
 const requestRegister = require("./middlewares/requests");
-const PORT = 8000;
-
+const { PORT, MONGODB_URI, API_KEY } = process.env;
+const port = process.env.PORT || 8000;
 app.use(express.json());
 app.use(cookieParser());
 
 mongoose
-  .connect(mongoKey, { useNewUrlParser: true })
+  .connect(MONGODB_URI, { useNewUrlParser: true })
   .then(console.log("connected to mongo"))
   .catch((err) => console.log(err));
 
@@ -48,4 +48,4 @@ app.get("/", (_req, res) => {
 app.get("*", (_req, res) => {
   res.status(404).send("error 404");
 });
-app.listen(PORT, () => console.log(`listen on port ${PORT}`));
+app.listen(port, () => console.log(`listen on port ${PORT}`));

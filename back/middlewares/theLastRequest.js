@@ -1,6 +1,6 @@
 const jwt = require("jsonwebtoken");
 const Register = require("../models/registerModel");
-const secret = require("../private/secret");
+const { secret } = process.env;
 
 async function theLastRequest(req, res, next) {
   const lastRequest = { last_reqest: new Date(Date.now()) };

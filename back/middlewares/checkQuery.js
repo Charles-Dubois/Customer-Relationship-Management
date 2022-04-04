@@ -2,7 +2,7 @@ const jwt = require("jsonwebtoken");
 const Register = require("../models/registerModel");
 const Contact = require("../models/contactModel");
 const queryJoi = require("../Joi/queryJoi");
-const secret = require("../private/secret");
+const { secret } = process.env;
 async function checkQuery(req, res, next) {
   if (req.query) {
     const validation = queryJoi.validate(req.query);

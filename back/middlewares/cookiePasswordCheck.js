@@ -1,6 +1,6 @@
 const jwt = require("jsonwebtoken");
 const resetPasswordJoi = require("../Joi/resetPassword");
-const secret = require("../private/secret");
+const { secret } = process.env;
 function cookiePasswordCheck(req, res, next) {
   const validation = resetPasswordJoi.validate(req.body);
   if (validation.error) {
