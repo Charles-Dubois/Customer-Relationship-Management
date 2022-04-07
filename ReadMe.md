@@ -43,6 +43,7 @@ Pour utilisez l'API vous avez besoin de Postman
 https://www.postman.com/
 
 
+
 ## Usage
 
 Toutes les champs renseignez doivent être au format JSON
@@ -103,6 +104,15 @@ Expemple :
 ##### /users/online
 
 `GET` Affiche les utlisateur dont la dernière requête date de moins de 1 minute
+
+## Roadmap
+
+- [x] CRUD utilisateur
+- [x] CRUD contact
+- [x] CRUD admin
+- [x] Reset password
+- [x] Stats requests
+- [ ] Front
 
 ## Contact
 
